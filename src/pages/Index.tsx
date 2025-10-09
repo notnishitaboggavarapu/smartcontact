@@ -94,6 +94,56 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Dashboard Access Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold">
+              Access Your
+              <span className="gradient-primary bg-clip-text text-transparent"> Dashboard</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Choose your dashboard based on your role
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Link to="/dashboard">
+              <Card className="p-8 space-y-6 shadow-elegant hover:shadow-primary transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 hover:border-primary">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-hero flex items-center justify-center">
+                  <BarChart3 className="w-8 h-8 text-white" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold">Business Dashboard</h3>
+                  <p className="text-muted-foreground">
+                    Manage customer messages, track analytics, and oversee all communications
+                  </p>
+                </div>
+                <div className="flex items-center text-primary font-semibold">
+                  Go to Dashboard <ArrowRight className="ml-2 h-5 w-5" />
+                </div>
+              </Card>
+            </Link>
+
+            <Link to="/customer-dashboard">
+              <Card className="p-8 space-y-6 shadow-elegant hover:shadow-secondary transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 hover:border-secondary">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-hero flex items-center justify-center">
+                  <MessageSquare className="w-8 h-8 text-white" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold">Customer Dashboard</h3>
+                  <p className="text-muted-foreground">
+                    View your conversations, track message status, and communicate with businesses
+                  </p>
+                </div>
+                <div className="flex items-center text-secondary font-semibold">
+                  Go to Dashboard <ArrowRight className="ml-2 h-5 w-5" />
+                </div>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
