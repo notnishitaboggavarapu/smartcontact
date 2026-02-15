@@ -14,7 +14,139 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      message_replies: {
+        Row: {
+          created_at: string
+          id: string
+          message_id: string
+          replied_by: string | null
+          reply_text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_id: string
+          replied_by?: string | null
+          reply_text: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_id?: string
+          replied_by?: string | null
+          reply_text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_replies_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      message_tags: {
+        Row: {
+          created_at: string
+          id: string
+          message_id: string
+          tag: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_id: string
+          tag: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_id?: string
+          tag?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_tags_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          created_at: string
+          customer_email: string
+          customer_name: string
+          id: string
+          is_archived: boolean
+          is_read: boolean
+          is_starred: boolean
+          message: string
+          owner_id: string | null
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          id?: string
+          is_archived?: boolean
+          is_read?: boolean
+          is_starred?: boolean
+          message: string
+          owner_id?: string | null
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          id?: string
+          is_archived?: boolean
+          is_read?: boolean
+          is_starred?: boolean
+          message?: string
+          owner_id?: string | null
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notification_settings: {
+        Row: {
+          daily_digest: boolean
+          id: string
+          new_message: boolean
+          reply_notify: boolean
+          updated_at: string
+          urgent_only: boolean
+          user_id: string
+        }
+        Insert: {
+          daily_digest?: boolean
+          id?: string
+          new_message?: boolean
+          reply_notify?: boolean
+          updated_at?: string
+          urgent_only?: boolean
+          user_id: string
+        }
+        Update: {
+          daily_digest?: boolean
+          id?: string
+          new_message?: boolean
+          reply_notify?: boolean
+          updated_at?: string
+          urgent_only?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

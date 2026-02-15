@@ -5,23 +5,54 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MessageSquare, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { signIn, signUp } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Authentication logic will be implemented when backend is connected
-    setTimeout(() => setIsLoading(false), 1000);
+    const form = e.target as HTMLFormElement;
+    const email = (form.elements.namedItem("signin-email") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("signin-password") as HTMLInputElement).value;
+
+    const { error } = await signIn(email, password);
+    setIsLoading(false);
+    if (error) {
+      toast({ title: "Sign in failed", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Welcome back!" });
+      navigate("/dashboard");
+    }
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Authentication logic will be implemented when backend is connected
-    setTimeout(() => setIsLoading(false), 1000);
+    const form = e.target as HTMLFormElement;
+    const email = (form.elements.namedItem("signup-email") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("signup-password") as HTMLInputElement).value;
+    const confirm = (form.elements.namedItem("signup-confirm") as HTMLInputElement).value;
+
+    if (password !== confirm) {
+      toast({ title: "Passwords don't match", variant: "destructive" });
+      setIsLoading(false);
+      return;
+    }
+
+    const { error } = await signUp(email, password);
+    setIsLoading(false);
+    if (error) {
+      toast({ title: "Sign up failed", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Account created!", description: "Please check your email to verify your account." });
+    }
   };
 
   return (
@@ -59,27 +90,14 @@ const Auth = () => {
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="signin-email">Email</Label>
-                    <Input
-                      id="signin-email"
-                      type="email"
-                      placeholder="you@example.com"
-                      required
-                    />
+                    <Input id="signin-email" type="email" placeholder="you@example.com" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="signin-password">Password</Label>
-                    <Input
-                      id="signin-password"
-                      type="password"
-                      placeholder="••••••••"
-                      required
-                    />
+                    <Input id="signin-password" type="password" placeholder="••••••••" required />
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Signing in..." : "Sign In"}
-                  </Button>
-                  <Button type="button" variant="link" className="w-full text-sm">
-                    Forgot your password?
                   </Button>
                 </form>
               </TabsContent>
@@ -87,40 +105,16 @@ const Auth = () => {
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-name">Business Name</Label>
-                    <Input
-                      id="signup-name"
-                      type="text"
-                      placeholder="Your Business"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
                     <Label htmlFor="signup-email">Email</Label>
-                    <Input
-                      id="signup-email"
-                      type="email"
-                      placeholder="you@example.com"
-                      required
-                    />
+                    <Input id="signup-email" type="email" placeholder="you@example.com" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="signup-password">Password</Label>
-                    <Input
-                      id="signup-password"
-                      type="password"
-                      placeholder="••••••••"
-                      required
-                    />
+                    <Input id="signup-password" type="password" placeholder="••••••••" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="signup-confirm">Confirm Password</Label>
-                    <Input
-                      id="signup-confirm"
-                      type="password"
-                      placeholder="••••••••"
-                      required
-                    />
+                    <Input id="signup-confirm" type="password" placeholder="••••••••" required />
                   </div>
                   <Button type="submit" className="w-full" variant="hero" disabled={isLoading}>
                     {isLoading ? "Creating account..." : "Create Account"}

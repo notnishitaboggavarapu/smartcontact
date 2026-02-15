@@ -2,18 +2,66 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Bell, Mail, Reply, CheckCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const EmailNotifications = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [settings, setSettings] = useState({
     newMessage: true,
     replyNotify: true,
     dailyDigest: false,
     urgentOnly: false,
   });
+  const [loaded, setLoaded] = useState(false);
 
-  const toggle = (key: keyof typeof settings) =>
-    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+  useEffect(() => {
+    if (!user) return;
+    const fetch = async () => {
+      const { data } = await supabase
+        .from("notification_settings")
+        .select("*")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (data) {
+        setSettings({
+          newMessage: data.new_message,
+          replyNotify: data.reply_notify,
+          dailyDigest: data.daily_digest,
+          urgentOnly: data.urgent_only,
+        });
+      }
+      setLoaded(true);
+    };
+    fetch();
+  }, [user]);
+
+  const toggle = async (key: keyof typeof settings) => {
+    if (!user) return;
+    const updated = { ...settings, [key]: !settings[key] };
+    setSettings(updated);
+
+    const dbPayload = {
+      user_id: user.id,
+      new_message: updated.newMessage,
+      reply_notify: updated.replyNotify,
+      daily_digest: updated.dailyDigest,
+      urgent_only: updated.urgentOnly,
+    };
+
+    const { error } = await supabase.from("notification_settings").upsert(dbPayload, { onConflict: "user_id" });
+
+    if (error) {
+      toast({ title: "Failed to save setting", description: error.message, variant: "destructive" });
+      setSettings(settings); // revert
+    }
+  };
+
+  if (!loaded) return null;
 
   return (
     <Card className="shadow-card mb-8">
