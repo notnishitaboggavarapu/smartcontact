@@ -60,7 +60,7 @@ const Index = () => {
                 Streamline communication, manage inquiries, and build lasting relationships with your customers—all in one powerful platform.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/auth">
+                <Link to="/auth?tab=signup">
                   <Button size="lg" variant="hero" className="w-full sm:w-auto">
                     Start Free Trial <ArrowRight className="ml-2" />
                   </Button>
