@@ -233,14 +233,14 @@ const Index = () => {
               Join thousands of businesses already using ConnectHub to streamline their operations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/auth">
-                <Button size="lg" variant="hero">
-                  Get Started Now <ArrowRight className="ml-2" />
+              <Link to="/auth?tab=signup" className="w-full sm:w-auto">
+                <Button size="lg" variant="hero" className="w-full sm:w-auto">
+                  Start Free Trial <ArrowRight className="ml-2" />
                 </Button>
               </Link>
-              <Link to="/contact">
-                <Button size="lg" variant="outline">
-                  Schedule a Demo
+              <Link to="/contact" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                  Contact Us
                 </Button>
               </Link>
             </div>
