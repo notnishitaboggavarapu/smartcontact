@@ -23,6 +23,9 @@ const Index = () => {
             <Link to="/" className="text-foreground hover:text-primary transition-colors">
               Home
             </Link>
+            <Link to="/marketplace" className="text-foreground hover:text-primary transition-colors">
+              Marketplace
+            </Link>
             <Link to="/about" className="text-foreground hover:text-primary transition-colors">
               About
             </Link>
