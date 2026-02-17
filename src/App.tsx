@@ -11,6 +11,9 @@ import Dashboard from "./pages/Dashboard";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import About from "./pages/About";
 import UserBenefits from "./pages/UserBenefits";
+import Marketplace from "./pages/Marketplace";
+import BusinessDetail from "./pages/BusinessDetail";
+import MyQuotes from "./pages/MyQuotes";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +33,9 @@ const App = () => (
             <Route path="/customer-dashboard" element={<CustomerDashboard />} />
             <Route path="/about" element={<About />} />
             <Route path="/user-benefits" element={<UserBenefits />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/business/:id" element={<BusinessDetail />} />
+            <Route path="/my-quotes" element={<MyQuotes />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
