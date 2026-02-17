@@ -147,7 +147,7 @@ const BusinessDetail = () => {
             <div className="w-10 h-10 rounded-lg bg-gradient-hero flex items-center justify-center">
               <MessageSquare className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">ConnectHub</span>
+            <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">Smart Contact</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/marketplace"><Button variant="ghost" size="sm"><ArrowLeft className="h-4 w-4 mr-1" /> Marketplace</Button></Link>

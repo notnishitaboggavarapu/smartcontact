@@ -40,7 +40,7 @@ const About = () => {
           <Link to="/" className="flex items-center gap-2">
             <MessageSquare className="h-8 w-8 text-primary" />
             <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-              ConnectHub
+              Smart Contact
             </span>
           </Link>
           <div className="flex items-center gap-3">
@@ -63,11 +63,11 @@ const About = () => {
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-3xl mx-auto space-y-6">
             <h1 className="text-5xl md:text-6xl font-bold">
-              About <span className="gradient-primary bg-clip-text text-transparent">ConnectHub</span>
+              About <span className="gradient-primary bg-clip-text text-transparent">Smart Contact</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
               We're on a mission to revolutionize how businesses communicate with their customers. 
-              Founded in 2024, ConnectHub has grown to serve thousands of businesses worldwide.
+              Founded in 2024, Smart Contact has grown to serve thousands of businesses worldwide.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const About = () => {
             <h2 className="text-4xl font-bold mb-8 text-center">Our Story</h2>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                ConnectHub was born from a simple observation: businesses were struggling to manage customer 
+                Smart Contact was born from a simple observation: businesses were struggling to manage customer 
                 communications across multiple channels. Email, phone, social media—it was chaotic and inefficient.
               </p>
               <p>
@@ -88,7 +88,7 @@ const About = () => {
                 seamless, and helps businesses build stronger relationships with their customers.
               </p>
               <p>
-                Today, ConnectHub serves businesses of all sizes, from solo entrepreneurs to enterprise organizations. 
+                Today, Smart Contact serves businesses of all sizes, from solo entrepreneurs to enterprise organizations. 
                 Our platform processes millions of messages every month, helping businesses respond faster and serve 
                 their customers better.
               </p>
@@ -181,7 +181,7 @@ const About = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <MessageSquare className="h-6 w-6 text-primary" />
-                <span className="text-xl font-bold">ConnectHub</span>
+                <span className="text-xl font-bold">Smart Contact</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Bridging businesses and customers through seamless communication.
@@ -213,7 +213,7 @@ const About = () => {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2025 ConnectHub. All rights reserved.</p>
+            <p>&copy; 2025 Smart Contact. All rights reserved.</p>
           </div>
         </div>
       </footer>

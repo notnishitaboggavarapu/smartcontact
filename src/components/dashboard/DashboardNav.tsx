@@ -20,7 +20,7 @@ const DashboardNav = () => {
           <div className="w-10 h-10 rounded-lg bg-gradient-hero flex items-center justify-center">
             <MessageSquare className="h-6 w-6 text-primary-foreground" />
           </div>
-          <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">ConnectHub</span>
+          <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">Smart Contact</span>
         </Link>
         <div className="flex items-center gap-3">
           <Badge variant="secondary" className="hidden md:flex">Business Owner</Badge>

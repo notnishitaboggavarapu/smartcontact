@@ -16,7 +16,7 @@ const Index = () => {
           <div className="flex items-center gap-2">
             <MessageSquare className="h-8 w-8 text-primary" />
             <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-              ConnectHub
+              Smart Connect
             </span>
           </div>
           <div className="hidden md:flex items-center gap-6">
@@ -233,7 +233,7 @@ const Index = () => {
               <span className="gradient-primary bg-clip-text text-transparent"> Customer Communication?</span>
             </h2>
             <p className="text-xl text-muted-foreground">
-              Join thousands of businesses already using ConnectHub to streamline their operations.
+              Join thousands of businesses already using Smart Connect to streamline their operations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth?tab=signup" className="w-full sm:w-auto">
@@ -258,7 +258,7 @@ const Index = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <MessageSquare className="h-6 w-6 text-primary" />
-                <span className="text-xl font-bold">ConnectHub</span>
+                <span className="text-xl font-bold">Smart Connect </span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Bridging businesses and customers through seamless communication.
@@ -290,7 +290,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2025 ConnectHub. All rights reserved.</p>
+            <p>&copy; 2025 Smart Connect. All rights reserved.</p>
           </div>
         </div>
       </footer>

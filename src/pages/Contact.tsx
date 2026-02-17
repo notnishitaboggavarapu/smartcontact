@@ -64,7 +64,7 @@ const Contact = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <MessageSquare className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">ConnectHub</span>
+            <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">Smart Contact</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/"><Button variant="ghost">Back to Home</Button></Link>
@@ -130,7 +130,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <h3 className="font-semibold mb-1">Email</h3>
-                        <p className="text-sm text-muted-foreground">support@connecthub.com</p>
+                        <p className="text-sm text-muted-foreground">support@smartcontact.com</p>
                       </div>
                     </div>
                     <div className="flex gap-4">

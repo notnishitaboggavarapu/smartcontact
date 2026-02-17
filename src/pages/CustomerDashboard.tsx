@@ -66,7 +66,7 @@ const CustomerDashboard = () => {
               <MessageSquare className="h-6 w-6 text-white" />
             </div>
             <span className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-              ConnectHub
+              Smart Contact
             </span>
           </Link>
           <div className="flex items-center gap-3">
