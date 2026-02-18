@@ -4,6 +4,7 @@ import AnalyticsDashboard from "@/components/dashboard/AnalyticsDashboard";
 import EmailNotifications from "@/components/dashboard/EmailNotifications";
 import MessageList from "@/components/dashboard/MessageList";
 import QuickActions from "@/components/dashboard/QuickActions";
+import BusinessQuoteManagement from "@/components/dashboard/BusinessQuoteManagement";
 import { useAuth } from "@/hooks/useAuth";
 import { Navigate } from "react-router-dom";
 
@@ -33,6 +34,7 @@ const Dashboard = () => {
           <p className="text-muted-foreground">Here's what's happening with your customer communications today.</p>
         </div>
         <StatsCards />
+        <BusinessQuoteManagement />
         <AnalyticsDashboard />
         <EmailNotifications />
         <MessageList />
