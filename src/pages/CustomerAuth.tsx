@@ -4,13 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageSquare, ArrowLeft } from "lucide-react";
+import { ShoppingBag, ArrowLeft, Mail, CheckCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
-const Auth = () => {
+const CustomerAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
+  const [signupEmail, setSignupEmail] = useState("");
   const { signIn, signUp } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -19,8 +21,8 @@ const Auth = () => {
     e.preventDefault();
     setIsLoading(true);
     const form = e.target as HTMLFormElement;
-    const email = (form.elements.namedItem("signin-email") as HTMLInputElement).value;
-    const password = (form.elements.namedItem("signin-password") as HTMLInputElement).value;
+    const email = (form.elements.namedItem("customer-signin-email") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("customer-signin-password") as HTMLInputElement).value;
 
     const { error } = await signIn(email, password);
     setIsLoading(false);
@@ -28,7 +30,7 @@ const Auth = () => {
       toast({ title: "Sign in failed", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Welcome back!" });
-      navigate("/dashboard");
+      navigate("/marketplace");
     }
   };
 
@@ -36,12 +38,18 @@ const Auth = () => {
     e.preventDefault();
     setIsLoading(true);
     const form = e.target as HTMLFormElement;
-    const email = (form.elements.namedItem("signup-email") as HTMLInputElement).value;
-    const password = (form.elements.namedItem("signup-password") as HTMLInputElement).value;
-    const confirm = (form.elements.namedItem("signup-confirm") as HTMLInputElement).value;
+    const email = (form.elements.namedItem("customer-signup-email") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("customer-signup-password") as HTMLInputElement).value;
+    const confirm = (form.elements.namedItem("customer-signup-confirm") as HTMLInputElement).value;
 
     if (password !== confirm) {
       toast({ title: "Passwords don't match", variant: "destructive" });
+      setIsLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({ title: "Password must be at least 6 characters", variant: "destructive" });
       setIsLoading(false);
       return;
     }
@@ -51,14 +59,50 @@ const Auth = () => {
     if (error) {
       toast({ title: "Sign up failed", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Account created!", description: "Please check your email to verify your account." });
+      setSignupEmail(email);
+      setShowVerification(true);
     }
   };
+
+  if (showVerification) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-hero opacity-10 animate-gradient"></div>
+        <Card className="w-full max-w-md shadow-card relative z-10">
+          <CardContent className="pt-8 pb-8 text-center space-y-6">
+            <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+              <Mail className="h-8 w-8 text-primary" />
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold">Check your email</h2>
+              <p className="text-muted-foreground">
+                We've sent a verification link to
+              </p>
+              <p className="font-medium text-foreground">{signupEmail}</p>
+            </div>
+            <div className="bg-muted/50 rounded-lg p-4 text-sm text-muted-foreground space-y-2">
+              <div className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 mt-0.5 text-primary" />
+                <span>Open the email and click the verification link</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 mt-0.5 text-primary" />
+                <span>Come back here and sign in with your credentials</span>
+              </div>
+            </div>
+            <Button variant="outline" className="w-full" onClick={() => setShowVerification(false)}>
+              Back to Sign In
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 gradient-hero opacity-10 animate-gradient"></div>
-      
+
       <div className="w-full max-w-md relative z-10">
         <div className="mb-8 text-center space-y-4">
           <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-4">
@@ -67,17 +111,17 @@ const Auth = () => {
           </Link>
           <div className="flex justify-center">
             <div className="w-16 h-16 rounded-2xl gradient-hero flex items-center justify-center shadow-glow">
-              <MessageSquare className="h-8 w-8 text-white" />
+              <ShoppingBag className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold">Welcome to SmartContact</h1>
-          <p className="text-muted-foreground">Manage your business communications</p>
+          <h1 className="text-3xl font-bold">Customer Portal</h1>
+          <p className="text-muted-foreground">Browse businesses, request quotes & track orders</p>
         </div>
 
         <Card className="shadow-card">
           <CardHeader>
-            <CardTitle>Business Owner Portal</CardTitle>
-            <CardDescription>Sign in to your account or create a new one</CardDescription>
+            <CardTitle>Get Started</CardTitle>
+            <CardDescription>Sign in or create an account to start shopping</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
@@ -89,12 +133,12 @@ const Auth = () => {
               <TabsContent value="signin">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email">Email</Label>
-                    <Input id="signin-email" type="email" placeholder="you@example.com" required />
+                    <Label htmlFor="customer-signin-email">Email</Label>
+                    <Input id="customer-signin-email" type="email" placeholder="you@example.com" required />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signin-password">Password</Label>
-                    <Input id="signin-password" type="password" placeholder="••••••••" required />
+                    <Label htmlFor="customer-signin-password">Password</Label>
+                    <Input id="customer-signin-password" type="password" placeholder="••••••••" required />
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Signing in..." : "Sign In"}
@@ -105,16 +149,16 @@ const Auth = () => {
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
-                    <Input id="signup-email" type="email" placeholder="you@example.com" required />
+                    <Label htmlFor="customer-signup-email">Email</Label>
+                    <Input id="customer-signup-email" type="email" placeholder="you@example.com" required />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password">Password</Label>
-                    <Input id="signup-password" type="password" placeholder="••••••••" required />
+                    <Label htmlFor="customer-signup-password">Password</Label>
+                    <Input id="customer-signup-password" type="password" placeholder="••••••••" required />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-confirm">Confirm Password</Label>
-                    <Input id="signup-confirm" type="password" placeholder="••••••••" required />
+                    <Label htmlFor="customer-signup-confirm">Confirm Password</Label>
+                    <Input id="customer-signup-confirm" type="password" placeholder="••••••••" required />
                   </div>
                   <Button type="submit" className="w-full" variant="hero" disabled={isLoading}>
                     {isLoading ? "Creating account..." : "Create Account"}
@@ -129,8 +173,8 @@ const Auth = () => {
         </Card>
 
         <p className="text-center text-sm text-muted-foreground mt-6">
-          Are you a customer?{" "}
-          <Link to="/customer-auth" className="text-primary hover:underline font-medium">
+          Are you a business owner?{" "}
+          <Link to="/auth" className="text-primary hover:underline font-medium">
             Sign in here
           </Link>
         </p>
@@ -139,4 +183,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default CustomerAuth;
