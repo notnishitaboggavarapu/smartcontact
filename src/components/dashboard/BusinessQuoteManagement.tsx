@@ -7,11 +7,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Clock, CheckCircle, XCircle, Send, FileText, User, Package, Calendar } from "lucide-react";
+import { Search, Clock, CheckCircle, XCircle, Send, FileText, User, Package, Calendar, Truck } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import BusinessRegistrationForm from "./BusinessRegistrationForm";
 
 const BusinessQuoteManagement = () => {
   const { user } = useAuth();
@@ -22,6 +23,7 @@ const BusinessQuoteManagement = () => {
   const [priceEstimate, setPriceEstimate] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [validUntil, setValidUntil] = useState("");
+  const [deliveryTime, setDeliveryTime] = useState("");
 
   // Get businesses owned by this user
   const { data: businesses = [] } = useQuery({
@@ -63,6 +65,7 @@ const BusinessQuoteManagement = () => {
         price_estimate: parseFloat(priceEstimate),
         message: responseMessage || null,
         valid_until: validUntil || null,
+        delivery_time: deliveryTime || null,
       });
       if (respError) throw respError;
 
@@ -80,6 +83,7 @@ const BusinessQuoteManagement = () => {
       setPriceEstimate("");
       setResponseMessage("");
       setValidUntil("");
+      setDeliveryTime("");
     },
     onError: (err: any) => {
       toast({ title: "Failed to send response", description: err.message, variant: "destructive" });
@@ -126,15 +130,7 @@ const BusinessQuoteManagement = () => {
   };
 
   if (businesses.length === 0) {
-    return (
-      <Card className="shadow-card border-0">
-        <CardContent className="pt-8 pb-8 text-center space-y-4">
-          <FileText className="h-12 w-12 mx-auto text-muted-foreground opacity-50" />
-          <h3 className="text-xl font-semibold">No Business Registered</h3>
-          <p className="text-muted-foreground">Register your business to start receiving quote requests.</p>
-        </CardContent>
-      </Card>
-    );
+    return <BusinessRegistrationForm />;
   }
 
   return (
@@ -231,6 +227,11 @@ const BusinessQuoteManagement = () => {
                             <p className="text-sm font-semibold text-primary">
                               Your Quote: ${resp.price_estimate}
                             </p>
+                            {resp.delivery_time && (
+                              <p className="text-sm text-muted-foreground flex items-center gap-1">
+                                <Truck className="h-3 w-3" /> Delivery: {resp.delivery_time}
+                              </p>
+                            )}
                             {resp.message && <p className="text-sm text-muted-foreground">{resp.message}</p>}
                           </div>
                         ))}
@@ -290,12 +291,18 @@ const BusinessQuoteManagement = () => {
                                   onChange={(e) => setValidUntil(e.target.value)}
                                 />
                               </div>
+                              <div className="space-y-2">
+                                <Label>Estimated Delivery Time (optional)</Label>
+                                <Input
+                                  placeholder="e.g. 3-5 business days"
+                                  value={deliveryTime}
+                                  onChange={(e) => setDeliveryTime(e.target.value)}
+                                  maxLength={100}
+                                />
+                              </div>
                               <div className="flex gap-2">
                                 <Button type="submit" className="flex-1" disabled={respondMutation.isPending}>
                                   {respondMutation.isPending ? "Sending..." : "Send Quote"}
-                                </Button>
-                                <Button type="button" variant="outline" onClick={() => setRespondingTo(null)}>
-                                  Cancel
                                 </Button>
                               </div>
                             </form>

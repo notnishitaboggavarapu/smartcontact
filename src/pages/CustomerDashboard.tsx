@@ -206,6 +206,11 @@ const CustomerDashboard = () => {
                                 <p className="text-sm font-semibold text-primary">
                                   Price Estimate: ${resp.price_estimate}
                                 </p>
+                                {resp.delivery_time && (
+                                  <p className="text-sm text-muted-foreground">
+                                    🚚 Delivery: {resp.delivery_time}
+                                  </p>
+                                )}
                                 {resp.message && <p className="text-sm text-muted-foreground">{resp.message}</p>}
                                 {resp.valid_until && (
                                   <p className="text-xs text-muted-foreground">
