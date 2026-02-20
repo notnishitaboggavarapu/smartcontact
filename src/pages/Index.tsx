@@ -78,26 +78,6 @@ const Index = () => {
               <p className="text-xl text-muted-foreground leading-relaxed">
                 Streamline communication, manage inquiries, and build lasting relationships with your customers—all in one powerful platform.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" variant="hero" className="w-full sm:w-auto" onClick={() => openRoleDialog("signup")}>
-                  Start Free Trial <ArrowRight className="ml-2" />
-                </Button>
-                <Link to="/contact">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                    Contact Us
-                  </Button>
-                </Link>
-              </div>
-              <div className="flex items-center gap-8 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-secondary" />
-                  <span>No credit card required</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-secondary" />
-                  <span>14-day free trial</span>
-                </div>
-              </div>
             </div>
             <div className="relative">
               <div className="absolute inset-0 gradient-hero opacity-20 blur-3xl"></div>
