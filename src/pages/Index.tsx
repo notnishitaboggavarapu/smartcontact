@@ -1,13 +1,33 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, MessageSquare, BarChart3, Shield, Zap, Users, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { ArrowRight, MessageSquare, BarChart3, Shield, Zap, Users, CheckCircle, Building2, ShoppingBag } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import heroIllustration from "@/assets/hero-illustration.png";
 import featureMessaging from "@/assets/feature-messaging.png";
 import featureDashboard from "@/assets/feature-dashboard.png";
 import featureTracking from "@/assets/feature-tracking.png";
 
 const Index = () => {
+  const [showRoleDialog, setShowRoleDialog] = useState(false);
+  const [dialogMode, setDialogMode] = useState<"signin" | "signup">("signup");
+  const navigate = useNavigate();
+
+  const openRoleDialog = (mode: "signin" | "signup") => {
+    setDialogMode(mode);
+    setShowRoleDialog(true);
+  };
+
+  const handleRoleSelect = (role: "business" | "customer") => {
+    setShowRoleDialog(false);
+    if (role === "business") {
+      navigate(dialogMode === "signup" ? "/auth?tab=signup" : "/auth");
+    } else {
+      navigate(dialogMode === "signup" ? "/customer-auth?tab=signup" : "/customer-auth");
+    }
+  };
+
   return (
     <div className="min-h-screen">
       {/* Navigation */}
@@ -34,12 +54,8 @@ const Index = () => {
             </Link>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/auth">
-              <Button variant="ghost">Sign In</Button>
-            </Link>
-            <Link to="/auth">
-              <Button variant="hero">Get Started</Button>
-            </Link>
+            <Button variant="ghost" onClick={() => openRoleDialog("signin")}>Sign In</Button>
+            <Button variant="hero" onClick={() => openRoleDialog("signup")}>Get Started</Button>
           </div>
         </div>
       </nav>
@@ -63,11 +79,9 @@ const Index = () => {
                 Streamline communication, manage inquiries, and build lasting relationships with your customers—all in one powerful platform.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/auth?tab=signup">
-                  <Button size="lg" variant="hero" className="w-full sm:w-auto">
-                    Start Free Trial <ArrowRight className="ml-2" />
-                  </Button>
-                </Link>
+                <Button size="lg" variant="hero" className="w-full sm:w-auto" onClick={() => openRoleDialog("signup")}>
+                  Start Free Trial <ArrowRight className="ml-2" />
+                </Button>
                 <Link to="/contact">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto">
                     Contact Us
@@ -236,11 +250,9 @@ const Index = () => {
               Join thousands of businesses already using Smart Connect to streamline their operations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/auth?tab=signup" className="w-full sm:w-auto">
-                <Button size="lg" variant="hero" className="w-full sm:w-auto">
-                  Start Free Trial <ArrowRight className="ml-2" />
-                </Button>
-              </Link>
+              <Button size="lg" variant="hero" className="w-full sm:w-auto" onClick={() => openRoleDialog("signup")}>
+                Start Free Trial <ArrowRight className="ml-2" />
+              </Button>
               <Link to="/contact" className="w-full sm:w-auto">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto">
                   Contact Us
@@ -294,6 +306,48 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* Role Selection Dialog */}
+      <Dialog open={showRoleDialog} onOpenChange={setShowRoleDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl text-center">
+              {dialogMode === "signup" ? "Create Your Account" : "Welcome Back"}
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              {dialogMode === "signup"
+                ? "How would you like to use Smart Connect?"
+                : "Sign in as a business owner or customer"}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-4 pt-4">
+            <button
+              onClick={() => handleRoleSelect("business")}
+              className="flex flex-col items-center gap-3 p-6 rounded-xl border-2 border-border hover:border-primary hover:bg-primary/5 transition-all duration-200 group"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Building2 className="h-7 w-7 text-primary" />
+              </div>
+              <div className="text-center space-y-1">
+                <p className="font-semibold text-foreground">Business</p>
+                <p className="text-xs text-muted-foreground">Manage quotes & customers</p>
+              </div>
+            </button>
+            <button
+              onClick={() => handleRoleSelect("customer")}
+              className="flex flex-col items-center gap-3 p-6 rounded-xl border-2 border-border hover:border-secondary hover:bg-secondary/5 transition-all duration-200 group"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+                <ShoppingBag className="h-7 w-7 text-secondary" />
+              </div>
+              <div className="text-center space-y-1">
+                <p className="font-semibold text-foreground">Customer</p>
+                <p className="text-xs text-muted-foreground">Browse & request quotes</p>
+              </div>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
