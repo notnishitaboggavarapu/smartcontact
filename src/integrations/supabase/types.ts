@@ -364,6 +364,7 @@ export type Database = {
         Row: {
           business_id: string
           created_at: string
+          delivery_time: string | null
           id: string
           message: string | null
           price_estimate: number
@@ -373,6 +374,7 @@ export type Database = {
         Insert: {
           business_id: string
           created_at?: string
+          delivery_time?: string | null
           id?: string
           message?: string | null
           price_estimate: number
@@ -382,6 +384,7 @@ export type Database = {
         Update: {
           business_id?: string
           created_at?: string
+          delivery_time?: string | null
           id?: string
           message?: string | null
           price_estimate?: number
